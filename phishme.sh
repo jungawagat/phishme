@@ -134,6 +134,7 @@ cleanup()
 {
 
 echo "${RED}"
+echo ""
 echo "[**] User Exit : Killing Servers !"
 echo ""
 kill $php_pid
