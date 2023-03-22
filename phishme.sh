@@ -92,10 +92,6 @@ fi
 
 nohup php -S localhost:8080 -t $1 > /dev/null 2>&1 &
 php_pid=$!
-while ! nc -z localhost 8080
-do
-sleep 1
-done
 echo "${GREEN}[**] PHP Server Started !"
 echo ""
 
