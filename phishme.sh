@@ -90,7 +90,7 @@ echo ""
 exit
 fi
 
-nohup php -S localhost:8080 -t $1 > /dev/null 2>&1 &
+nohup php -S localhost:8848 -t $1 > /dev/null 2>&1 &
 php_pid=$!
 echo "${GREEN}[**] PHP Server Started !"
 echo ""
@@ -106,7 +106,7 @@ chmod +x $file
 fi
 done
 
-nohup ./cloudflared/$cloudflared tunnel -url "localhost":"8080" --logfile cloudflared.log > /dev/null 2>&1 &
+nohup ./cloudflared/$cloudflared tunnel -url "localhost":"8848" --logfile cloudflared.log > /dev/null 2>&1 &
 cloudflared_pid=$!
 while true
 do
